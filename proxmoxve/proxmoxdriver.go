@@ -604,10 +604,6 @@ func (d *Driver) Create() error {
 		numa = 1
 	}
 
-	if d.GuestSSHPublicKey != "" {
-		d.GuestSSHAuthorizedKeys = fmt.Sprintf("%s\n%s\n",d.GuestSSHAuthorizedKeys, d.GuestSSHPublicKey)
-	}
-
 	npp := NodesNodeQemuPostParameter{
 		VMID:      d.VMID,
 		Memory:    d.Memory,
@@ -623,7 +619,7 @@ func (d *Driver) Create() error {
 		Sockets:   d.Sockets,
 		Cores:     d.Cores,
 		Cdrom:     d.ImageFile,
-		SshKeys:   strings.Replace(url.QueryEscape(d.GuestSSHAuthorizedKeys), "+", "%20", -1), // d.GuestSSHAuthorizedKeys,
+		SshKeys:   strings.Replace(url.QueryEscape(d.GuestSSHAuthorizedKeys), "+", "%20", -1), // d.GuestSSHAuthorizedKeys, //
 		CPU:       cpuDefinition,
 		Numa:      numa,
 		Citype:    "nocloud",
