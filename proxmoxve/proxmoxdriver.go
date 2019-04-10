@@ -644,7 +644,18 @@ func (d *Driver) Create() error {
 	}
 
 	d.Start()
-	return d.waitAndPrepareSSH()
+
+	err = d.waitAndPrepareSSH()
+	if err != nil {
+		return err
+	}
+
+	ip, err := d.GetIP()
+	if err != nil {
+		return err
+	}
+	d.IPAddress = ip
+	return nil
 }
 
 func (d *Driver) waitAndPrepareSSH() error {
