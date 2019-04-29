@@ -10,8 +10,7 @@ The incomplete state is over, as I have a working configuration:
         28
 
 * Create your own `boot2docker` ISO to have the guest agent integrated [boot2docker Pull 1319](https://github.com/boot2docker/boot2docker/pull/1319) ([Direct Download in original forked repo](https://github.com/lnxbil/boot2docker/releases/tag/2018-09-16))
-* I am testing this with Rancher OS, so you can download the iso from them.
-  Here are the links for the rancher os images I am using: ([rancheros-autoformat.iso] (https://releases.rancher.com/os/v1.5.1/proxmoxve/rancheros-autoformat.iso))
+* I am testing this with Rancher OS, so you can download the iso from this link: [rancheros-autoformat.iso](https://releases.rancher.com/os/v1.5.1/proxmoxve/rancheros-autoformat.iso)
      
 * Create a script with the following contents and adapt to your needs:
 
