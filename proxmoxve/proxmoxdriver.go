@@ -14,7 +14,8 @@ import (
 	"path"
 	"strings"
 	"time"
-	"math/rand"
+	mrand "math/rand"
+	"strconv"
 
 	sshrw "github.com/mosolovsa/go_cat_sshfilerw"
 	"golang.org/x/crypto/ssh"
@@ -514,19 +515,23 @@ func (d *Driver) PreCreateCheck() error {
 
 	d.debug("Generating random ID")
 
-	rand.Seed(time.Now().UnixNano())
+	mrand.Seed(time.Now().UnixNano())
 
-	randomId, err := (rand.Intn(100000000 - 999999999) + 100000000)
-	if err != nil {
-		return err
-	}
+	randomId := (mrand.Intn(9999999 - 1000000) + 1000000)
+	randomIdString := strconv.Itoa(randomId)
+
+	fmt.Println(randomId)
 
 	d.debugf("Chequing if ID '%s' is free", randomId)
+	d.debugf("Chequing if ID '%s' is free", randomIdString)
 
-	id, err := d.driver.ClusterNextIDGet(randomId)
+	id, err := d.driver.ClusterNextIDGet(0)
 	if err != nil {
 		return err
 	}
+
+	id = randomIdString
+
 	d.debugf("Next ID was '%s'", id)
 	d.VMID = id
 

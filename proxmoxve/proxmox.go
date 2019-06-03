@@ -181,6 +181,7 @@ func (p ProxmoxVE) runMethod(method string, input interface{}, output interface{
 	switch method {
 	case "get":
 		response, err = p.client.R().SetQueryParams(p.structToStringMap(input)).Get(p.getURL(path))
+		
 	case "post":
 		response, err = p.client.R().SetFormData(p.structToStringMap(input)).Post(p.getURL(path))
 	case "put":
@@ -194,6 +195,7 @@ func (p ProxmoxVE) runMethod(method string, input interface{}, output interface{
 	if err != nil {
 		return err
 	}
+
 	code := response.StatusCode()
 	if code < 200 || code > 300 {
 		fmt.Printf("RESPONSE OBJECT:\n\n%+v\n", response)
@@ -298,9 +300,14 @@ return err
 // ClusterNextIDGet Get next free VMID. If you pass an VMID it will raise an error if the ID is already used.
 func (p ProxmoxVE) ClusterNextIDGet(id int) (vmid string, err error) {
 	path := "/cluster/nextid"
+
 	if id == 0 {
+		fmt.Println("aca 0")
+
 		err = p.get(nil, &vmid, path)
 	} else {
+		fmt.Println("acato con ", id)
+
 		err = p.get(id, &vmid, path)
 	}
 	return vmid, err
