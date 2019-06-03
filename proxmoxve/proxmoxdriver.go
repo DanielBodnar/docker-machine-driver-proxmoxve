@@ -14,6 +14,7 @@ import (
 	"path"
 	"strings"
 	"time"
+	"math/rand"
 
 	sshrw "github.com/mosolovsa/go_cat_sshfilerw"
 	"golang.org/x/crypto/ssh"
@@ -511,8 +512,18 @@ func (d *Driver) PreCreateCheck() error {
 		return err
 	}
 
-	d.debug("Retrieving next ID")
-	id, err := d.driver.ClusterNextIDGet(0)
+	d.debug("Generating random ID")
+
+	rand.Seed(time.Now().UnixNano())
+
+	randomId, err := (rand.Intn(100000000 - 999999999) + 100000000)
+	if err != nil {
+		return err
+	}
+
+	d.debugf("Chequing if ID '%s' is free", randomId)
+
+	id, err := d.driver.ClusterNextIDGet(randomId)
 	if err != nil {
 		return err
 	}
